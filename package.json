@@ -1,0 +1,34 @@
+{
+  "name": "@nw-lab/node-red-contrib-m5roller485",
+  "version": "0.1.0",
+  "description": "Node-RED MCU node for M5Stack Roller485 unit control via I2C",
+  "main": "node/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node-red",
+    "node-red-mcu",
+    "m5stack",
+    "m5roller485",
+    "roller485",
+    "motor",
+    "i2c",
+    "actuator",
+    "mcu"
+  ],
+  "author": "NW-Lab",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NW-Lab/node-red-cotrib-m5roller485.git"
+  },
+  "node-red": {
+    "nodes": {
+      "m5roller485-node": "node/m5roller485-node/m5roller485-node.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

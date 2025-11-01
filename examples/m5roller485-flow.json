@@ -1,0 +1,216 @@
+[
+  {
+    "id": "f1a2b3c4d5e6f7g8",
+    "type": "tab",
+    "label": "M5-Roller485 Sample Flow",
+    "disabled": false,
+    "info": "M5-Roller485ノードのサンプルフロー\n\nこのフローでは、以下の動作を実演します:\n1. 90度回転\n2. -90度回転\n3. 180度回転\n4. 360度回転(1回転)\n5. -180度回転"
+  },
+  {
+    "id": "inject1",
+    "type": "inject",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "90度回転",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "90",
+    "payloadType": "num",
+    "x": 140,
+    "y": 80,
+    "wires": [
+      [
+        "m5roller485",
+        "debug1"
+      ]
+    ]
+  },
+  {
+    "id": "inject2",
+    "type": "inject",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "-90度回転",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "-90",
+    "payloadType": "num",
+    "x": 140,
+    "y": 140,
+    "wires": [
+      [
+        "m5roller485",
+        "debug1"
+      ]
+    ]
+  },
+  {
+    "id": "inject3",
+    "type": "inject",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "180度回転",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "180",
+    "payloadType": "num",
+    "x": 140,
+    "y": 200,
+    "wires": [
+      [
+        "m5roller485",
+        "debug1"
+      ]
+    ]
+  },
+  {
+    "id": "inject4",
+    "type": "inject",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "360度回転(1回転)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "360",
+    "payloadType": "num",
+    "x": 160,
+    "y": 260,
+    "wires": [
+      [
+        "m5roller485",
+        "debug1"
+      ]
+    ]
+  },
+  {
+    "id": "inject5",
+    "type": "inject",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "-180度回転",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "-180",
+    "payloadType": "num",
+    "x": 140,
+    "y": 320,
+    "wires": [
+      [
+        "m5roller485",
+        "debug1"
+      ]
+    ]
+  },
+  {
+    "id": "m5roller485",
+    "type": "m5roller485-node",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "M5-Roller485",
+    "address": 100,
+    "sda": 21,
+    "scl": 22,
+    "hz": 400000,
+    "current": 1000,
+    "x": 400,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "debug1",
+    "type": "debug",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "角度表示",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 400,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "comment1",
+    "type": "comment",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "M5-Roller485 サンプルフロー",
+    "info": "このフローは、M5-Roller485ノードの基本的な使い方を示しています。\n\n## 使い方\n1. 各Injectノードのボタンをクリックすると、対応する角度でRollerが回転します\n2. Debug出力で送信された角度を確認できます\n\n## 注意事項\n- 動作中は次の角度指定まで約2秒待機してください\n- I2Cピン設定はM5-Roller485ノードのプロパティから変更可能です\n- デフォルト設定: SDA=21, SCL=22, アドレス=0x64",
+    "x": 200,
+    "y": 20,
+    "wires": []
+  },
+  {
+    "id": "inject6",
+    "type": "inject",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "範囲外(-400度)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "-400",
+    "payloadType": "num",
+    "x": 160,
+    "y": 400,
+    "wires": [
+      [
+        "m5roller485",
+        "debug1"
+      ]
+    ]
+  },
+  {
+    "id": "comment2",
+    "type": "comment",
+    "z": "f1a2b3c4d5e6f7g8",
+    "name": "範囲外の値は無視されます",
+    "info": "-360度〜360度の範囲外の値を送信しても、ノードは動作しません。",
+    "x": 200,
+    "y": 360,
+    "wires": []
+  }
+]

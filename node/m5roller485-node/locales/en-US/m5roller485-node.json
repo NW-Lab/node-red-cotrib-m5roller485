@@ -1,0 +1,38 @@
+{
+    "m5roller485-node": {
+        "label": {
+            "name": "Name",
+            "address": "I2C Address",
+            "addressHint": "(hex: 0x64)",
+            "sda": "SDA Pin",
+            "scl": "SCL Pin",
+            "hz": "I2C Speed",
+            "current": "Current Limit",
+            "currentUnit": "(×0.01A)"
+        },
+        "placeholder": {
+            "name": "M5-Roller485"
+        },
+        "help": {
+            "main": "Controls M5Stack Roller485 unit via I2C. Receives an angle in msg.payload (-360 to 360 degrees) and rotates the motor to the specified angle.",
+            "inputsTitle": "Inputs",
+            "payloadDesc": "Rotation angle in degrees (-360 to 360). Values outside this range are ignored.",
+            "detailsTitle": "Details",
+            "details": "This node operates the M5-Roller485 in position control mode.<br/>When an angle is received, it executes the following sequence:<br/><ol><li>Set position mode</li><li>Set target position</li><li>Set current limit</li><li>Turn motor output ON</li><li>Wait 2 seconds</li><li>Turn motor output OFF (to prevent heating)</li></ol>",
+            "propertiesTitle": "Properties",
+            "propAddress": "I2C Address",
+            "propAddressDesc": "Device I2C address (default: 0x64 = 100)",
+            "propSda": "SDA Pin",
+            "propSdaDesc": "I2C SDA pin number (default: 21)",
+            "propScl": "SCL Pin",
+            "propSclDesc": "I2C SCL pin number (default: 22)",
+            "propHz": "I2C Speed",
+            "propHzDesc": "I2C communication speed (default: 400000Hz = 400kHz)",
+            "propCurrent": "Current Limit",
+            "propCurrentDesc": "Maximum current during motor operation (default: 1000 = 10.00A)",
+            "referencesTitle": "References",
+            "refProduct": "M5-Roller485 Product Page",
+            "refGithub": "M5Unit-Roller GitHub Repository"
+        }
+    }
+}

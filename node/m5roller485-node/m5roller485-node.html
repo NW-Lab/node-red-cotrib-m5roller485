@@ -1,0 +1,96 @@
+<script type="text/javascript">
+    RED.nodes.registerType('m5roller485-node',{
+        category: 'MCU',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" },
+            address: { value: 0x64, validate: RED.validators.number() },
+            sda: { value: 21, validate: RED.validators.number() },
+            scl: { value: 22, validate: RED.validators.number() },
+            hz: { value: 400000, validate: RED.validators.number() },
+            current: { value: 1000, validate: RED.validators.number() },
+            moddable_manifest: {value: {include: "$(NODEREDMCU)/nodes/mcu/i2c/manifest.json"}}
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name || "M5-Roller485";
+        },
+        labelStyle: function() {
+            return this.name ? "node_label_italic" : "";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="m5roller485-node">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> <span data-i18n="m5roller485-node.label.name"></span></label>
+        <input type="text" id="node-input-name" data-i18n="[placeholder]m5roller485-node.placeholder.name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-address"><i class="fa fa-microchip"></i> <span data-i18n="m5roller485-node.label.address"></span></label>
+        <input type="number" id="node-input-address" placeholder="0x64" style="width: 70%">
+        <span data-i18n="m5roller485-node.label.addressHint"></span>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-sda"><i class="fa fa-plug"></i> <span data-i18n="m5roller485-node.label.sda"></span></label>
+        <input type="number" id="node-input-sda" placeholder="21" style="width: 70%">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-scl"><i class="fa fa-plug"></i> <span data-i18n="m5roller485-node.label.scl"></span></label>
+        <input type="number" id="node-input-scl" placeholder="22" style="width: 70%">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-hz"><i class="fa fa-tachometer"></i> <span data-i18n="m5roller485-node.label.hz"></span></label>
+        <input type="number" id="node-input-hz" placeholder="400000" style="width: 70%">
+        <span>Hz</span>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-current"><i class="fa fa-bolt"></i> <span data-i18n="m5roller485-node.label.current"></span></label>
+        <input type="number" id="node-input-current" placeholder="1000" style="width: 70%">
+        <span data-i18n="m5roller485-node.label.currentUnit"></span>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="m5roller485-node">
+    <p data-i18n="[html]m5roller485-node.help.main"></p>
+
+    <h3 data-i18n="m5roller485-node.help.inputsTitle"></h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">number</span></dt>
+        <dd data-i18n="[html]m5roller485-node.help.payloadDesc"></dd>
+    </dl>
+
+    <h3 data-i18n="m5roller485-node.help.detailsTitle"></h3>
+    <p data-i18n="[html]m5roller485-node.help.details"></p>
+
+    <h3 data-i18n="m5roller485-node.help.propertiesTitle"></h3>
+    <dl class="message-properties">
+        <dt data-i18n="m5roller485-node.help.propAddress"></dt>
+        <dd data-i18n="[html]m5roller485-node.help.propAddressDesc"></dd>
+        
+        <dt data-i18n="m5roller485-node.help.propSda"></dt>
+        <dd data-i18n="[html]m5roller485-node.help.propSdaDesc"></dd>
+        
+        <dt data-i18n="m5roller485-node.help.propScl"></dt>
+        <dd data-i18n="[html]m5roller485-node.help.propSclDesc"></dd>
+        
+        <dt data-i18n="m5roller485-node.help.propHz"></dt>
+        <dd data-i18n="[html]m5roller485-node.help.propHzDesc"></dd>
+        
+        <dt data-i18n="m5roller485-node.help.propCurrent"></dt>
+        <dd data-i18n="[html]m5roller485-node.help.propCurrentDesc"></dd>
+    </dl>
+
+    <h3 data-i18n="m5roller485-node.help.referencesTitle"></h3>
+    <ul>
+        <li><a href="https://docs.m5stack.com/en/unit/Unit-Roller485" target="_blank" data-i18n="[html]m5roller485-node.help.refProduct"></a></li>
+        <li><a href="https://github.com/m5stack/M5Unit-Roller" target="_blank" data-i18n="[html]m5roller485-node.help.refGithub"></a></li>
+    </ul>
+</script>

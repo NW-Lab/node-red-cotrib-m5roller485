@@ -1,0 +1,38 @@
+{
+    "m5roller485-node": {
+        "label": {
+            "name": "名前",
+            "address": "I2Cアドレス",
+            "addressHint": "(16進数: 0x64)",
+            "sda": "SDAピン",
+            "scl": "SCLピン",
+            "hz": "I2C速度",
+            "current": "電流制限",
+            "currentUnit": "(×0.01A)"
+        },
+        "placeholder": {
+            "name": "M5-Roller485"
+        },
+        "help": {
+            "main": "M5Stack Roller485ユニットをI2C経由で制御します。msg.payloadで角度(-360〜360度)を受け取り、モーターを指定角度まで回転させます。",
+            "inputsTitle": "入力",
+            "payloadDesc": "回転角度を度数(-360〜360)で指定します。範囲外の値は無視されます。",
+            "detailsTitle": "詳細",
+            "details": "このノードはM5-Roller485を位置制御モードで動作させます。<br/>角度を受信すると、以下のシーケンスで動作します:<br/><ol><li>位置モードに設定</li><li>目標位置を設定</li><li>電流制限を設定</li><li>モーター出力をON</li><li>2秒待機</li><li>モーター出力をOFF(発熱防止)</li></ol>",
+            "propertiesTitle": "プロパティ",
+            "propAddress": "I2Cアドレス",
+            "propAddressDesc": "デバイスのI2Cアドレス (デフォルト: 0x64 = 100)",
+            "propSda": "SDAピン",
+            "propSdaDesc": "I2C SDAピン番号 (デフォルト: 21)",
+            "propScl": "SCLピン",
+            "propSclDesc": "I2C SCLピン番号 (デフォルト: 22)",
+            "propHz": "I2C速度",
+            "propHzDesc": "I2C通信速度 (デフォルト: 400000Hz = 400kHz)",
+            "propCurrent": "電流制限",
+            "propCurrentDesc": "モーター駆動時の最大電流 (デフォルト: 1000 = 10.00A)",
+            "referencesTitle": "参考資料",
+            "refProduct": "M5-Roller485 製品ページ",
+            "refGithub": "M5Unit-Roller GitHubリポジトリ"
+        }
+    }
+}
