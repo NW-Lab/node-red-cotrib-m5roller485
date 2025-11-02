@@ -1,0 +1,3 @@
+[submodule "node-create-guidelines"]
+	path = node-create-guidelines
+	url = git@github.com:NW-Lab/node-create-guidelines.git
