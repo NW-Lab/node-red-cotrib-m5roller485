@@ -87,6 +87,8 @@ class M5Roller485Node extends Node {
     }
 
     #controlMotor(position, current, angle, done) {
+            trace(`M5Roller485: Starting control - angle=${angle}, position=${position}, current=${current}\n`);
+            
         try {
             // Step 0: Set LED to RED (debugging indicator)
             const redLED = new Uint8Array(4);
@@ -94,10 +96,21 @@ class M5Roller485Node extends Node {
             redLED[1] = 255; // R
             redLED[2] = 0;   // G
             redLED[3] = 0;   // B
-            this.#i2c.write(redLED);
+            try {
+                this.#i2c.write(redLED);
+                trace(`M5Roller485: LED set to RED\n`);
+            } catch(e) {
+                trace(`M5Roller485: LED write failed: ${e.message}\n`);
+            }
 
             // Step 1: Set Position Mode
-            this.#i2c.write(Uint8Array.of(I2C_MODE_REG, ROLLER_MODE_POSITION));
+            try {
+                this.#i2c.write(Uint8Array.of(I2C_MODE_REG, ROLLER_MODE_POSITION));
+                trace(`M5Roller485: Mode set to POSITION\n`);
+            } catch(e) {
+                trace(`M5Roller485: Mode write failed: ${e.message}\n`);
+                throw e;
+            }
 
             // Step 2: Set Position (4 bytes, little-endian)
             const posBytes = new Uint8Array(5);
@@ -106,7 +119,13 @@ class M5Roller485Node extends Node {
             posBytes[2] = (position >> 8) & 0xFF;
             posBytes[3] = (position >> 16) & 0xFF;
             posBytes[4] = (position >> 24) & 0xFF;
-            this.#i2c.write(posBytes);
+            try {
+                this.#i2c.write(posBytes);
+                trace(`M5Roller485: Position set to ${position}\n`);
+            } catch(e) {
+                trace(`M5Roller485: Position write failed: ${e.message}\n`);
+                throw e;
+            }
 
             // Step 3: Set Maximum Current (4 bytes, little-endian)
             // Current value is already in units of 0.01A, so use directly
@@ -116,16 +135,33 @@ class M5Roller485Node extends Node {
             currentBytes[2] = (current >> 8) & 0xFF;
             currentBytes[3] = (current >> 16) & 0xFF;
             currentBytes[4] = (current >> 24) & 0xFF;
-            this.#i2c.write(currentBytes);
+            try {
+                this.#i2c.write(currentBytes);
+                trace(`M5Roller485: Current set to ${current}\n`);
+            } catch(e) {
+                trace(`M5Roller485: Current write failed: ${e.message}\n`);
+                throw e;
+            }
 
             // Step 4: Start Motor (Output ON)
-            this.#i2c.write(Uint8Array.of(I2C_OUTPUT_REG, 0x01));
+            try {
+                this.#i2c.write(Uint8Array.of(I2C_OUTPUT_REG, 0x01));
+                trace(`M5Roller485: Motor output ON\n`);
+            } catch(e) {
+                trace(`M5Roller485: Motor ON write failed: ${e.message}\n`);
+                throw e;
+            }
 
             // Step 5: Wait 2 seconds for movement to complete
             Timer.set(() => {
                 try {
                     // Step 6: Stop Motor (Output OFF) to prevent heating
-                    this.#i2c.write(Uint8Array.of(I2C_OUTPUT_REG, 0x00));
+                    try {
+                        this.#i2c.write(Uint8Array.of(I2C_OUTPUT_REG, 0x00));
+                        trace(`M5Roller485: Motor output OFF\n`);
+                    } catch(e) {
+                        trace(`M5Roller485: Motor OFF write failed: ${e.message}\n`);
+                    }
                     
                     // Turn off LED (set to black)
                     const blackLED = new Uint8Array(4);
@@ -133,7 +169,12 @@ class M5Roller485Node extends Node {
                     blackLED[1] = 0; // R
                     blackLED[2] = 0; // G
                     blackLED[3] = 0; // B
-                    this.#i2c.write(blackLED);
+                    try {
+                        this.#i2c.write(blackLED);
+                        trace(`M5Roller485: LED turned OFF\n`);
+                    } catch(e) {
+                        trace(`M5Roller485: LED OFF write failed: ${e.message}\n`);
+                    }
                     
                     this.status({fill: "green", shape: "dot", text: `at ${angle}°`});
                     done();
