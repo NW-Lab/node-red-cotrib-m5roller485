@@ -1,6 +1,6 @@
 {
-    "modules": [
-        "node/m5roller485-node/m5roller485-node.mcu.js"
-    ],
-    "preload": []
+    "modules": {
+        "m5roller485-node": "./node/m5roller485-node/m5roller485-node.mcu"
+    },
+    "preload": "m5roller485-node"
 }

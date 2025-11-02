@@ -21,7 +21,7 @@ const ROLLER_MODE_POSITION = 0x02;     // Position control mode
 // Conversion constant: 36000 encoder pos = 360 degrees
 const POS_PER_DEGREE = 100;  // 36000/360 = 100 encoder positions per degree
 
-export default class M5Roller485Node extends Node {
+class M5Roller485Node extends Node {
     #i2c;
     #options;
 
