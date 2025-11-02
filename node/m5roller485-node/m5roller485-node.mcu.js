@@ -90,18 +90,7 @@ class M5Roller485Node extends Node {
             trace(`M5Roller485: Starting control - angle=${angle}, position=${position}, current=${current}\n`);
             
         try {
-            // Step 0: Set LED to RED (debugging indicator)
-            const redLED = new Uint8Array(4);
-            redLED[0] = I2C_RGB_REG;
-            redLED[1] = 255; // R
-            redLED[2] = 0;   // G
-            redLED[3] = 0;   // B
-            try {
-                this.#i2c.write(redLED);
-                trace(`M5Roller485: LED set to RED\n`);
-            } catch(e) {
-                trace(`M5Roller485: LED write failed: ${e.message}\n`);
-            }
+            // LED control disabled - not working on this firmware (shows blue/green only)
 
             // Step 1: Set Position Mode
             try {
@@ -152,7 +141,7 @@ class M5Roller485Node extends Node {
                 throw e;
             }
 
-            // Step 5: Wait 2 seconds for movement to complete
+            // Step 5: Wait 5 seconds for movement to complete
             Timer.set(() => {
                 try {
                     // Step 6: Stop Motor (Output OFF) to prevent heating
@@ -163,19 +152,6 @@ class M5Roller485Node extends Node {
                         trace(`M5Roller485: Motor OFF write failed: ${e.message}\n`);
                     }
                     
-                    // Turn off LED (set to black)
-                    const blackLED = new Uint8Array(4);
-                    blackLED[0] = I2C_RGB_REG;
-                    blackLED[1] = 0; // R
-                    blackLED[2] = 0; // G
-                    blackLED[3] = 0; // B
-                    try {
-                        this.#i2c.write(blackLED);
-                        trace(`M5Roller485: LED turned OFF\n`);
-                    } catch(e) {
-                        trace(`M5Roller485: LED OFF write failed: ${e.message}\n`);
-                    }
-                    
                     this.status({fill: "green", shape: "dot", text: `at ${angle}°`});
                     done();
                 }
@@ -183,7 +159,7 @@ class M5Roller485Node extends Node {
                     this.status({fill: "red", shape: "ring", text: "stop failed"});
                     done(e);
                 }
-            }, 2000);
+            }, 5000);
         }
         catch (e) {
             this.status({fill: "red", shape: "ring", text: "control failed"});
