@@ -13,6 +13,7 @@ const I2C_OUTPUT_REG = 0x00;           // Motor output ON/OFF
 const I2C_MODE_REG = 0x01;             // Mode setting
 const I2C_POS_REG = 0x80;              // Position setting
 const I2C_POS_MAX_CURRENT_REG = 0x20;  // Maximum current for position mode
+const I2C_RGB_REG = 0x30;              // RGB LED control
 
 // Motor Modes
 const ROLLER_MODE_POSITION = 0x02;     // Position control mode
@@ -31,7 +32,8 @@ class M5Roller485Node extends Node {
             address: config.address || 0x64,
             data: config.sda || 21,
             clock: config.scl || 22,
-            hz: config.hz || 400000
+            hz: config.hz || 400000,
+            current: config.current || 1000
         };
 
         try {
@@ -71,13 +73,12 @@ class M5Roller485Node extends Node {
             const position = Math.round(angle * POS_PER_DEGREE * 100);
             
             // Get current setting from config (default 1000 = 10.00A)
-            const currentLimit = this.#options.current || 1000;
-            const currentBytes = currentLimit * 100;
+            const currentLimit = this.#options.current;
 
             this.status({fill: "yellow", shape: "dot", text: `moving to ${angle}°`});
 
             // Execute motor control sequence
-            this.#controlMotor(position, currentBytes, angle, done);
+            this.#controlMotor(position, currentLimit, angle, done);
         }
         catch (e) {
             this.status({fill: "red", shape: "ring", text: "error"});
@@ -87,6 +88,14 @@ class M5Roller485Node extends Node {
 
     #controlMotor(position, current, angle, done) {
         try {
+            // Step 0: Set LED to RED (debugging indicator)
+            const redLED = new Uint8Array(4);
+            redLED[0] = I2C_RGB_REG;
+            redLED[1] = 255; // R
+            redLED[2] = 0;   // G
+            redLED[3] = 0;   // B
+            this.#i2c.write(redLED);
+
             // Step 1: Set Position Mode
             this.#i2c.write(Uint8Array.of(I2C_MODE_REG, ROLLER_MODE_POSITION));
 
@@ -100,6 +109,7 @@ class M5Roller485Node extends Node {
             this.#i2c.write(posBytes);
 
             // Step 3: Set Maximum Current (4 bytes, little-endian)
+            // Current value is already in units of 0.01A, so use directly
             const currentBytes = new Uint8Array(5);
             currentBytes[0] = I2C_POS_MAX_CURRENT_REG;
             currentBytes[1] = current & 0xFF;
@@ -116,6 +126,15 @@ class M5Roller485Node extends Node {
                 try {
                     // Step 6: Stop Motor (Output OFF) to prevent heating
                     this.#i2c.write(Uint8Array.of(I2C_OUTPUT_REG, 0x00));
+                    
+                    // Turn off LED (set to black)
+                    const blackLED = new Uint8Array(4);
+                    blackLED[0] = I2C_RGB_REG;
+                    blackLED[1] = 0; // R
+                    blackLED[2] = 0; // G
+                    blackLED[3] = 0; // B
+                    this.#i2c.write(blackLED);
+                    
                     this.status({fill: "green", shape: "dot", text: `at ${angle}°`});
                     done();
                 }
