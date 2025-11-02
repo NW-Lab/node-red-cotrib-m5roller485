@@ -192,7 +192,4 @@ export default class M5Roller485Node extends Node {
     }
 
     static type = "m5roller485-node";
-    static {
-        RED.nodes.registerType(this.type, this);
-    }
 }

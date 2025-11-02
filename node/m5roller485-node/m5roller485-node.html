@@ -9,10 +9,7 @@
             scl: { value: 22, validate: RED.validators.number() },
             hz: { value: 400000, validate: RED.validators.number() },
             current: { value: 1000, validate: RED.validators.number() },
-            moddable_manifest: {value: {include: [
-                "$(NODEREDMCU)/nodes/mcu/i2c/manifest.json",
-                "$(HOME)/.node-red/node_modules/@nw-lab/node-red-contrib-m5roller485/manifest.json"
-            ]}}
+            moddable_manifest: {value: {include: [{"git": "https://github.com/NW-Lab/node-red-cotrib-m5roller485.git"}]}}
         },
         inputs: 1,
         outputs: 0,
